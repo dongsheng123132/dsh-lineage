@@ -1,0 +1,17 @@
+{
+  "name": "dsh-lineage",
+  "version": "0.1.0",
+  "description": "Content-addressed data and action lineage evidence for DeepSeek Harness",
+  "author": {
+    "name": "hfshfg"
+  },
+  "interface": {
+    "displayName": "DSH Lineage",
+    "shortDescription": "Build and verify content-addressed evidence lineage.",
+    "longDescription": "Incrementally builds an append-only DAG of artifact, fact, action and report nodes, verifies every referenced object by SHA-256, and emits content-addressed closure reports.",
+    "developerName": "hfshfg",
+    "category": "Developer Tools",
+    "capabilities": ["Evidence lineage", "DAG verification", "Upstream and downstream queries"],
+    "defaultPrompt": "Ingest these lineage events, disclose missing or stale evidence, and verify the requested upstream and downstream closure."
+  }
+}

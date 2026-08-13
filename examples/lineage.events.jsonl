@@ -1,0 +1,7 @@
+{"eventVersion":1,"idempotencyKey":"example-source-v1","op":"put-node","node":{"id":"artifact:source-v1","type":"artifact","ref":{"path":"examples/objects/source.json","sha256":"3d508ed89df94fac2506e0effee5165f9a5aca54a2af27808ee38cc752923069"}}}
+{"eventVersion":1,"idempotencyKey":"example-action-v1","op":"put-node","node":{"id":"action:normalize-v1","type":"action","ref":{"path":"examples/objects/action.json","sha256":"118034407bd13c7f982bbfc6dcbdc6e4cf9e3f6de0118263ba4c32d24801d95a"}}}
+{"eventVersion":1,"idempotencyKey":"example-fact-v1","op":"put-node","node":{"id":"fact:normalized-v1","type":"fact","ref":{"path":"examples/objects/fact.json","sha256":"aa48bbee86dea1011eaf029b8f29cb3a5df8fe53220aac85d2834c8d0fd37b77"}}}
+{"eventVersion":1,"idempotencyKey":"example-report-v1","op":"put-node","node":{"id":"report:verify-v1","type":"report","ref":{"path":"examples/objects/report.json","sha256":"040cd83ce63195b3508a92af38c80e335fa7f50eb9ac5c4493b871fa167898e1"}}}
+{"eventVersion":1,"idempotencyKey":"example-derived-edge-v1","op":"put-edge","edge":{"id":"edge:action-derived-source","type":"derived-from","from":"action:normalize-v1","to":"artifact:source-v1"}}
+{"eventVersion":1,"idempotencyKey":"example-produced-edge-v1","op":"put-edge","edge":{"id":"edge:fact-produced-action","type":"produced-by","from":"fact:normalized-v1","to":"action:normalize-v1"}}
+{"eventVersion":1,"idempotencyKey":"example-observed-edge-v1","op":"put-edge","edge":{"id":"edge:fact-observed-report","type":"observed-by","from":"fact:normalized-v1","to":"report:verify-v1"}}
