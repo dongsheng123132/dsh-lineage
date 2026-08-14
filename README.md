@@ -1,5 +1,10 @@
 # dsh-lineage
 
+[![CI](https://github.com/dongsheng123132/dsh-lineage/actions/workflows/check.yml/badge.svg)](https://github.com/dongsheng123132/dsh-lineage/actions/workflows/check.yml)
+[![MIT license](https://img.shields.io/github/license/dongsheng123132/dsh-lineage)](LICENSE)
+[![Node.js 22+](https://img.shields.io/badge/Node.js-%E2%89%A522-339933?logo=nodedotjs&logoColor=white)](package.json)
+[![Awesome DSH Plugins](https://img.shields.io/badge/Awesome_DSH-verified_lab-0969da)](https://github.com/dongsheng123132/awesome-dsh-plugins#2origin-plugin-lab)
+
 Content-addressed data and action lineage evidence for [DeepSeek Harness](https://github.com/deepseek-ai/DeepSeek-Harness).
 
 The DSH ecosystem already has a security-audit plugin that reports plugin provenance. `dsh-lineage` addresses a different gap: it builds a local, verifiable object graph for artifacts, verified-fact records, actions, and reports. It never stores chat transcripts or factual prose; a node is only a typed ID plus an explicit workspace-relative object reference and expected SHA-256.

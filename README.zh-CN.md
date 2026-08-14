@@ -1,5 +1,10 @@
 # dsh-lineage
 
+[![CI](https://github.com/dongsheng123132/dsh-lineage/actions/workflows/check.yml/badge.svg)](https://github.com/dongsheng123132/dsh-lineage/actions/workflows/check.yml)
+[![MIT 许可证](https://img.shields.io/github/license/dongsheng123132/dsh-lineage)](LICENSE)
+[![Node.js 22+](https://img.shields.io/badge/Node.js-%E2%89%A522-339933?logo=nodedotjs&logoColor=white)](package.json)
+[![Awesome DSH Plugins](https://img.shields.io/badge/Awesome_DSH-%E5%B7%B2%E9%AA%8C%E8%AF%81%E5%AE%9E%E9%AA%8C-0969da)](https://github.com/dongsheng123132/awesome-dsh-plugins/blob/main/README.zh-CN.md#2origin-%E6%8F%92%E4%BB%B6%E5%AE%9E%E9%AA%8C%E5%AE%A4)
+
 面向 [DeepSeek Harness](https://github.com/deepseek-ai/DeepSeek-Harness) 的内容寻址数据/动作血缘证据。
 
 DSH 生态已有安全审计插件扫描“插件从哪里来”；`dsh-lineage` 解决的是另一层：为 artifact、已验证 fact 记录、action 和 report 建立本地可复核对象图。它不保存聊天记录或事实正文；节点只包含类型化 ID、工作区相对对象引用与期望 SHA-256。
