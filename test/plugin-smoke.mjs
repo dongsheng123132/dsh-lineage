@@ -4,8 +4,12 @@ import { mkdtemp, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { createDefinitions } from '../index.js'
+import * as plugin from '../index.js'
 
 const hash = value => createHash('sha256').update(value).digest('hex')
+assert.equal('default' in plugin, false, 'a default export makes the real DSH Loader discard namespace inject metadata')
+assert.equal(plugin.name, 'dsh-lineage')
+assert.deepEqual(plugin.inject, ['tools'])
 const root = await mkdtemp(join(tmpdir(), 'dsh-lineage-plugin-'))
 const source = '{"artifact":"source"}\n'
 const action = '{"action":"build"}\n'
@@ -32,4 +36,4 @@ assert.equal(query.nodeIds.length, 3)
 const verified = await tools[3].execute({ ledgerDir: 'ledger', nodeId: 'report:proof', direction: 'upstream', artifactDir: 'artifacts' })
 assert.equal(verified.passed, true)
 assert.equal(verified.artifact.verifiedByReadBack, true)
-console.log(JSON.stringify({ ok: true, tools: tools.map(tool => tool.name), ledgerFingerprint: ingested.ledgerFingerprint, artifact: verified.artifact }))
+console.log(JSON.stringify({ ok: true, namespacePlugin: true, inject: plugin.inject, tools: tools.map(tool => tool.name), ledgerFingerprint: ingested.ledgerFingerprint, artifact: verified.artifact }))

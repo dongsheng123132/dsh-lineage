@@ -9,6 +9,10 @@
 
 DSH 生态已有安全审计插件扫描“插件从哪里来”；`dsh-lineage` 解决的是另一层：为 artifact、已验证 fact 记录、action 和 report 建立本地可复核对象图。它不保存聊天记录或事实正文；节点只包含类型化 ID、工作区相对对象引用与期望 SHA-256。
 
+0.2.0 同时是正式 Codex 插件和独立 proof-only MCP server，并采用真实 DSH Web Loader 所要求的命名空间导出形态；仓库内有真实 Cordis 启动回归，防止加载契约再次漂移。
+
+外部相邻工具多在追踪 Skill bundle 版本、哈希链式 agent 活动或登记来源；本项目坚持做对象图证据层：类型化内容寻址节点、显式因果边、可解引用引用、DAG 校验、上下游闭包以及 missing/stale 披露。
+
 ## 图模型
 
 节点类型：`artifact`、`fact`、`action`、`report`。
@@ -65,6 +69,15 @@ dsh plugin --profile lineage add github:dongsheng123132/dsh-lineage
 - `dsh_lineage_query`
 - `dsh_lineage_verify`
 
+## MCP
+
+`.mcp.json` 声明独立 stdio MCP server：
+
+- `lineage_events_inspect`：验证最大 1 MiB 的内联 JSONL 图，返回结构哈希、计数、悬空引用、环和关系错误。
+- `lineage_events_query`：对内联事件返回确定性的上下游闭包。
+
+MCP 不解引用对象路径，也不读写文件系统。持久 append-only 写入与对象 SHA-256 校验只保留在受 workspace 限制的 DSH 工具和 CLI 表面。
+
 ## 命令行
 
 ```bash
@@ -84,6 +97,8 @@ dsh-lineage verify --root D:/project --ledger ledger --node report:proof --direc
 npm test
 npm run check
 npm run smoke:plugin
+npm run smoke:mcp
+python C:/Users/ZhuanZ/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .
 ```
 
 要求 Node.js 22+。没有安装生命周期脚本；运行依赖只有可选的 DSH tools SDK peer。

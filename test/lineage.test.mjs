@@ -4,7 +4,7 @@ import { mkdtemp, mkdir, readFile, symlink, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import test from 'node:test'
-import { ingestLineage, inspectLineage, normalizeEvent, queryLineage, verifyLineage } from '../lib/lineage.mjs'
+import { ingestLineage, inspectLineage, inspectLineageEventsJsonl, normalizeEvent, queryLineage, queryLineageEventsJsonl, verifyLineage } from '../lib/lineage.mjs'
 
 const hash = value => createHash('sha256').update(value).digest('hex')
 
@@ -55,6 +55,24 @@ test('incrementally ingests content-addressed nodes and queries both directions'
   assert.equal(verified.passed, true)
   assert.equal(verified.artifact.verifiedByReadBack, true)
   assert.equal(hash(await readFile(join(root, verified.artifact.path))), verified.artifact.sha256)
+})
+
+test('inline structural proof inspects and queries without dereferencing objects', () => {
+  const events = [
+    node('source-v1', 'artifact:source', 'artifact', 'private/source.json', hash('not-present')),
+    node('action-v1', 'action:build', 'action', 'private/action.json', hash('not-present')),
+    edge('derived-v1', 'edge:derived', 'derived-from', 'action:build', 'artifact:source')
+  ]
+  const eventsJsonl = `${events.map(value => JSON.stringify(value)).join('\n')}\n`
+  const inspected = inspectLineageEventsJsonl(eventsJsonl)
+  assert.equal(inspected.structurallyHealthy, true)
+  assert.equal(inspected.nodes.artifact, 1)
+  assert.equal(inspected.eventsSha256, hash(eventsJsonl))
+  const queried = queryLineageEventsJsonl(eventsJsonl, 'action:build', 'upstream')
+  assert.deepEqual(queried.nodeIds, ['action:build', 'artifact:source'])
+  const forbidden = structuredClone(events[0])
+  forbidden.claim = 'do-not-echo'
+  assert.throws(() => inspectLineageEventsJsonl(`${JSON.stringify(forbidden)}\n`), /forbidden raw-content/)
 })
 
 test('discloses missing, stale and dangling evidence without inventing facts', async () => {

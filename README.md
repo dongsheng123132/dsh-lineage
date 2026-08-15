@@ -9,6 +9,10 @@ Content-addressed data and action lineage evidence for [DeepSeek Harness](https:
 
 The DSH ecosystem already has a security-audit plugin that reports plugin provenance. `dsh-lineage` addresses a different gap: it builds a local, verifiable object graph for artifacts, verified-fact records, actions, and reports. It never stores chat transcripts or factual prose; a node is only a typed ID plus an explicit workspace-relative object reference and expected SHA-256.
 
+Version 0.2.0 is a formal Codex plugin and standalone proof-only MCP server, and uses the namespace export shape required by the stock DSH Web Loader. A real Cordis boot regression test guards that loader contract.
+
+Adjacent tools track Skill bundle versions, hash-chain agent activity, or register provenance. This project stays at the object-graph evidence layer: typed content-addressed nodes, explicit causal edges, resolvable references, DAG validation, upstream/downstream closure, and missing/stale disclosure.
+
 ## Graph model
 
 Node types:
@@ -70,6 +74,15 @@ Registered tools:
 - `dsh_lineage_query`
 - `dsh_lineage_verify`
 
+## MCP
+
+`.mcp.json` declares a standalone stdio MCP server:
+
+- `lineage_events_inspect` validates a bounded inline JSONL graph and reports structural hashes, counts, dangling references, cycles and relation errors.
+- `lineage_events_query` returns deterministic upstream/downstream closure over those inline events.
+
+MCP accepts at most 1 MiB of inline structural events. It never dereferences object paths and never reads or writes the filesystem. Persistent append-only ingestion and object-hash verification remain available only through the workspace-bounded DSH tool and CLI surfaces.
+
 ## CLI
 
 ```bash
@@ -96,6 +109,8 @@ See [`examples/lineage.events.jsonl`](examples/lineage.events.jsonl).
 npm test
 npm run check
 npm run smoke:plugin
+npm run smoke:mcp
+python C:/Users/ZhuanZ/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .
 ```
 
 Requires Node.js 22+. There are no runtime dependencies or install lifecycle scripts beyond the optional DSH tools SDK peer.
