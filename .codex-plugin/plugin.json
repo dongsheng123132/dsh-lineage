@@ -1,6 +1,6 @@
 {
   "name": "dsh-lineage",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Content-addressed data and action lineage evidence for DeepSeek Harness",
   "author": {
     "name": "2Origin",
@@ -9,7 +9,13 @@
   "homepage": "https://github.com/dongsheng123132/dsh-lineage#readme",
   "repository": "https://github.com/dongsheng123132/dsh-lineage",
   "license": "MIT",
-  "keywords": ["deepseek-harness", "lineage", "provenance", "evidence", "dag"],
+  "keywords": [
+    "deepseek-harness",
+    "lineage",
+    "provenance",
+    "evidence",
+    "dag"
+  ],
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "DSH Lineage",
@@ -17,7 +23,13 @@
     "longDescription": "Incrementally builds an append-only DAG of artifact, fact, action and report nodes, verifies every referenced object by SHA-256, and emits content-addressed closure reports.",
     "developerName": "hfshfg",
     "category": "Developer Tools",
-    "capabilities": ["Read", "Write", "Audit"],
-    "defaultPrompt": ["Inspect these lineage events and verify their structural closure without exposing object contents."]
+    "capabilities": [
+      "Read",
+      "Write",
+      "Audit"
+    ],
+    "defaultPrompt": [
+      "Inspect these lineage events and verify their structural closure without exposing object contents."
+    ]
   }
 }
